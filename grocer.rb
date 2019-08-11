@@ -72,7 +72,7 @@ def checkout(cart, coupons)
   couponed = apply_coupons(consolidated, coupons)
   clearanced = apply_clearance(couponed)
   binding.pry
-  clearanced.each { |key, value| total = total + value[:price] }
+  clearanced.each { |key, value| total = total + (value[:price] * value[:count]) }
   
   total
 end
