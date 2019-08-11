@@ -39,10 +39,7 @@ def apply_coupons(cart, coupons)
       #calculate and append count key/value pair after coupon
       cart[coupon_item_name][:count] = cart[coupon[:item]][:count]  
       #modify count on original cart entry
-      original_count_minus_coupon = cart[coupon[:item]][:count] - coupon[:num]
-      cart[coupon[:item]][:count] = original_count_minus_coupon
-      
-      if original_count_minus_coupon > coupon[:num]
+      if cart[coupon[:item]][:count] > coupon[:num]
         times_applied = cart[coupon[:item]][:count] / coupon[:num]
         remainder = cart[coupon[:item]][:count] % coupon[:num]
         #update discounted count
@@ -51,8 +48,9 @@ def apply_coupons(cart, coupons)
         #update original cart entry count (minus all discounted)
         cart[coupon[:item]][:count] = remainder
       end
-      #binding.pry
-      #goal:       removes the number of discounted items from the original item's count
+      
+      binding.pry
+      #goal:       removes the number of discounted items from the original item's count; calculate times_applied, remainder and discounted_count
       
     end
   end
