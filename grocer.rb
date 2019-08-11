@@ -20,13 +20,20 @@ def consolidate_cart(cart)
 end
 
 def apply_coupons(cart, coupons)
-  hash_after_coupons = {}
-  
+
   coupons.each do |coupon|
-    if cart.keys.index(coupon.keys[0])
-      puts "I'm here"
+    #binding.pry
+    
+    if cart.key?(coupon[:item])
+      #generate a key with variable first word depending on coupon
+      cart["#{coupon[:item]} W/COUPON"] = coupon
+      #set price to 
+      cart["#{coupon[:item]} W/COUPON"] = coupon[:price]
+      cart["#{coupon[:item]} W/COUPON"] = coupon[:count]
     end
   end
+  
+  cart
 end
 
 def apply_clearance(cart)
