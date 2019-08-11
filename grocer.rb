@@ -28,16 +28,32 @@ def apply_coupons(cart, coupons)
       #generate a key with variable first word depending on coupon
       coupon_item_name = "#{coupon[:item]} W/COUPON"
       cart[coupon_item_name] = {}
-      cart[coupon_item_name][:price] = cart[coupon[:item]][:price]
+
+      #calculate price after coupon
+      coupon_item_price = coupon[:cost] / coupon[:num]
+      cart[coupon_item_name][:price] = coupon_item_price
+      
+      #append clearance key/value pair from original cart entry
       cart[coupon_item_name][:clearance] = cart[coupon[:item]][:clearance]
-      cart[coupon_item_name][:count] = cart[coupon[:item]][:count]
       
-      #"AVOCADO W/COUPON"=>{:item=>"AVOCADO", :num=>2, :cost=>5.0}
-      binding.pry
+      #calculate and append count key/value pair after coupon
+      cart[coupon_item_name][:count] = cart[coupon[:item]][:count]  
+      #modify count on original cart entry
+      original_count_minus_coupon = cart[coupon[:item]][:count] - coupon[:num]
+      cart[coupon[:item]][:count] = original_count_minus_coupon
       
-      #set price to !!!DO THIS NEXT!!!
-      #cart["#{coupon[:item]} W/COUPON"] = coupon[:]
-      #cart["#{coupon[:item]} W/COUPON"] = coupon[:count]
+      if original_count_minus_coupon > coupon[:num]
+        times_applied = cart[coupon[:item]][:count] / coupon[:num]
+        remainder = cart[coupon[:item]][:count] % coupon[:num]
+        #update discounted count
+        discounted_count = times_applied * coupon[:num]
+        cart[coupon_item_name][:count] = discounted_count
+        #update original cart entry count (minus all discounted)
+        cart[coupon[:item]][:count] = remainder
+      end
+      #binding.pry
+      #goal:       removes the number of discounted items from the original item's count
+      
     end
   end
   
