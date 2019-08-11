@@ -22,7 +22,7 @@ end
 def apply_coupons(cart, coupons)
 
   coupons.each do |coupon|
-    #binding.pry
+    binding.pry
     
     if cart.key?(coupon[:item])
       #generate a key with variable first word depending on coupon
@@ -35,11 +35,10 @@ def apply_coupons(cart, coupons)
       
       #append clearance key/value pair from original cart entry
       cart[coupon_item_name][:clearance] = cart[coupon[:item]][:clearance]
-      
-      #calculate and append count key/value pair after coupon
-      cart[coupon_item_name][:count] = cart[coupon[:item]][:count]  
-      #modify count on original cart entry
-      if cart[coupon[:item]][:count] > coupon[:num]
+
+      #calculate and modify count on original cart entry
+      if coupon.count && cart[coupon[:item]][:count] > coupon[:num]
+        #binding.pry
         times_applied = cart[coupon[:item]][:count] / coupon[:num]
         remainder = cart[coupon[:item]][:count] % coupon[:num]
         #update discounted count
@@ -48,8 +47,7 @@ def apply_coupons(cart, coupons)
         #update original cart entry count (minus all discounted)
         cart[coupon[:item]][:count] = remainder
       end
-      
-      binding.pry
+
       #goal:       removes the number of discounted items from the original item's count; calculate times_applied, remainder and discounted_count
       
     end
