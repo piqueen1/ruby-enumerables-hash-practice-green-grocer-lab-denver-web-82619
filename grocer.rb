@@ -26,11 +26,16 @@ def apply_coupons(cart, coupons)
     
     if cart.key?(coupon[:item])
       #generate a key with variable first word depending on coupon
-      cart["#{coupon[:item]} W/COUPON"] = coupon
+      coupon_item_name = "#{coupon[:item]} W/COUPON"
+      cart[coupon_item_name] = {}
+      cart[coupon_item_name]
+      
+      #"AVOCADO W/COUPON"=>{:item=>"AVOCADO", :num=>2, :cost=>5.0}
+      binding.pry
       
       #set price to !!!DO THIS NEXT!!!
-      cart["#{coupon[:item]} W/COUPON"] = coupon[:]
-      cart["#{coupon[:item]} W/COUPON"] = coupon[:count]
+      #cart["#{coupon[:item]} W/COUPON"] = coupon[:]
+      #cart["#{coupon[:item]} W/COUPON"] = coupon[:count]
     end
   end
   
