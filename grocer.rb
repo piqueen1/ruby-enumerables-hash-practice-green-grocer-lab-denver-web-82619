@@ -28,7 +28,9 @@ def apply_coupons(cart, coupons)
       #generate a key with variable first word depending on coupon
       coupon_item_name = "#{coupon[:item]} W/COUPON"
       cart[coupon_item_name] = {}
-      cart[coupon_item_name]
+      cart[coupon_item_name][:price] = cart[coupon[:item]][:price]
+      cart[coupon_item_name][:clearance] = cart[coupon[:item]][:clearance]
+      cart[coupon_item_name][:count] = cart[coupon[:item]][:count]
       
       #"AVOCADO W/COUPON"=>{:item=>"AVOCADO", :num=>2, :cost=>5.0}
       binding.pry
