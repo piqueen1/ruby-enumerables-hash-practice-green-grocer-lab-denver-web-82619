@@ -20,7 +20,13 @@ def consolidate_cart(cart)
 end
 
 def apply_coupons(cart, coupons)
-  # code here
+  hash_after_coupons = {}
+  
+  coupons.each do |coupon|
+    if cart.keys.index(coupon.keys[0])
+      puts "I'm here"
+    end
+  end
 end
 
 def apply_clearance(cart)
