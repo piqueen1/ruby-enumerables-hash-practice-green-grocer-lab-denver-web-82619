@@ -22,21 +22,19 @@ end
 def apply_coupons(cart, coupons)
 
   coupons.each do |coupon|
-    #binding.pry
-    
     if cart.key?(coupon[:item])
       
       #generate a key with variable first word depending on coupon
       coupon_item_name = "#{coupon[:item]} W/COUPON"
       
+      #if no such item exists in cart, add it and initialize it
       if !cart[coupon_item_name]
        cart[coupon_item_name] = {}
        coupon_item_price = coupon[:cost] / coupon[:num]
        cart[coupon_item_name][:price] = coupon_item_price
        cart[coupon_item_name][:clearance] = cart[coupon[:item]][:clearance]
       end
-      
-      #binding.pry
+
       #calculate and modify count on original cart entry
       if cart[coupon[:item]][:count] >= coupon[:num]
         
@@ -45,16 +43,10 @@ def apply_coupons(cart, coupons)
           cart[coupon_item_name][:count] + coupon[:num] :
           coupon[:num]
         cart[coupon_item_name][:count] = discounted_count
-        
-        #binding.pry
+
         #update original cart entry count (minus all discounted)
         cart[coupon[:item]][:count] = cart[coupon[:item]][:count] - coupon[:num]
       end
-
-      #goals:       
-      #removes the number of discounted items from the original item's count
-      #augments count of cart's couponed item by how many were discounted
-      
     end
   end
   
@@ -62,7 +54,15 @@ def apply_coupons(cart, coupons)
 end
 
 def apply_clearance(cart)
-  # code here
+  cart.each do |item|
+    #binding.pry
+    if
+      item[1][:clearance]
+        item[1][:price] = (item[1][:price] * 0.80).round(2)
+    end
+  end
+  
+  cart
 end
 
 def checkout(cart, coupons)
