@@ -72,7 +72,7 @@ def checkout(cart, coupons)
   #couponed = apply_coupons(consolidated, coupons)
   #clearanced = apply_clearance(couponed)
   
-  consolidated.each { |key, value| total = total + value }
+  consolidated.each { |key, value| total = total + value[:price] }
   
   total
 end
